@@ -1,8 +1,9 @@
 {
   "name": "ms-blog",
-  "description": "Matthew Shooks Blog",
-  "version": "2.0.0",
+  "description": "Matthew Shooks' personal blog",
+  "version": "3.0.0",
   "author": "Matthew Shooks <shooksm@gmail.com>",
+  "private": true,
   "dependencies": {
     "gatsby": "next",
     "gatsby-plugin-feed": "next",
@@ -31,11 +32,17 @@
     "typography-theme-wordpress-2016": "^0.15.10"
   },
   "devDependencies": {
+    "del-cli": "^1.1.0",
     "eslint": "^4.19.1",
     "eslint-plugin-react": "^7.7.0",
     "gh-pages": "^1.1.0",
     "prettier": "^1.12.0"
   },
+  "keywords": [
+    "gatsby",
+    "blog",
+    "react"
+  ],
   "license": "MIT",
   "main": "n/a",
   "scripts": {
@@ -44,8 +51,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --trailing-comma es5 --no-semi --single-quote --write 'src/**/*.js' 'src/**/*.md'",
     "develop": "gatsby develop",
+    "prebuild": "npm run clean",
     "build": "gatsby build",
     "deploy": "gatsby build --prefix-paths && gh-pages -d public",
-    "fix-semi": "eslint --quiet --ignore-pattern node_modules --ignore-pattern public --parser babel-eslint --no-eslintrc --rule '{\"semi\": [2, \"never\"], \"no-extra-semi\": [2]}' --fix gatsby-node.js"
+    "fix-semi": "eslint --quiet --ignore-pattern node_modules --ignore-pattern public --parser babel-eslint --no-eslintrc --rule '{\"semi\": [2, \"never\"], \"no-extra-semi\": [2]}' --fix gatsby-node.js",
+    "clean": "del-cli public"
   }
 }
