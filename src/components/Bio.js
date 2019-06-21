@@ -27,10 +27,7 @@ class Bio extends React.Component {
           }}
         />
         <p>
-          Written by <strong>Matthew Shooks</strong> who is a front-end developer and a Michigan fan living in the Buckeye state.{' '}
-          <a href="https://twitter.com/matthewshooks">
-            You should follow him on Twitter
-          </a>
+          Written by <strong>Matthew Shooks</strong> who is a front-end developer and a Michigan fan living in the Buckeye state.
         </p>
       </div>
     )
