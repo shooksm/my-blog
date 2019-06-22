@@ -1,6 +1,7 @@
 ---
 title: Hello World
 date: "2012-07-11T14:42:25.000Z"
+description: New and improved site
 ---
 
 I have recently updated my hosting account to be a cloud account and had to drop the use of ColdFusion as my host only supports .net and php. After using asp, asp.net, jsp, php, c and perl for creating web pages and sites, I still find ColdFusion is hands down the best. I have gotten more done with less lines of code thanks to ColdFusion. I had it to easy not having to manage connection information, 3rd party programs to do email, pdf and charting, easy integration with Flash and just getting programs developed faster. But the reality is the rest of the world does not agree especially around Columbus.
