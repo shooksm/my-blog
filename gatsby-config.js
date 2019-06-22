@@ -2,16 +2,23 @@ module.exports = {
   siteMetadata: {
     title: 'MS Blog',
     author: 'Matthew Shooks',
-    description: 'The personal blog of Matthew Shooks with posts around web and mobile development.',
+    description:
+      'The personal blog of Matthew Shooks with posts around web and mobile development.',
     siteUrl: 'http://blog.shooksweb.com',
   },
-  pathPrefix: '/',
   plugins: [
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/src/pages`,
-        name: 'pages',
+        path: `${__dirname}/content/blog`,
+        name: `blog`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/content/assets`,
+        name: `assets`,
       },
     },
     {
@@ -45,6 +52,18 @@ module.exports = {
       },
     },
     `gatsby-plugin-feed`,
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `MS Blog`,
+        short_name: `MSBlog`,
+        start_url: `/`,
+        background_color: `#ffffff`,
+        theme_color: `#663399`,
+        display: `minimal-ui`,
+        icon: `content/assets/gatsby-icon.png`,
+      },
+    },
     `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet`,
     {
