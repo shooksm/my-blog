@@ -16,12 +16,12 @@ $ npm i axios react prop-types @okta/okta-react react-router-dom lodash
 TLDR, copy the following to get started. I'll break down how it works after the code.
 
 ```jsx
-import React from 'react';
-import axios from 'axios';
-import PropTypes from 'prop-types';
-import { withAuth } from '@okta/okta-react';
-import { withRouter } from 'react-router-dom';
-import { get } from 'lodash';
+import React from "react"
+import axios from "axios"
+import PropTypes from "prop-types"
+import { withAuth } from "@okta/okta-react"
+import { withRouter } from "react-router-dom"
+import { get } from "lodash"
 
 export class UndecoratedSetupAxios extends React.Component {
   static propTypes = {
@@ -35,7 +35,7 @@ export class UndecoratedSetupAxios extends React.Component {
     requestInterceptorErrorHandler: PropTypes.func,
     responseInterceptorSuccessHandler: PropTypes.func,
     responseInterceptorErrorHandler: PropTypes.func,
-  };
+  }
 
   static defaultProps = {
     axios,
@@ -44,75 +44,75 @@ export class UndecoratedSetupAxios extends React.Component {
     requestInterceptorErrorHandler: error => Promise.reject(error),
     responseInterceptorSuccessHandler: response => response,
     responseInterceptorErrorHandler: error => Promise.reject(error),
-  };
+  }
 
-  static displayName = 'SetupAxios';
+  static displayName = "SetupAxios"
 
-  requestInterceptor = null;
-  responseInterceptor = null;
+  requestInterceptor = null
+  responseInterceptor = null
 
   componentDidMount() {
     this.requestInterceptor = this.props.axios.interceptors.request.use(
       this.requestInterceptorSuccessHandler,
-      this.requestInterceptorErrorHandler
-    );
+      this.requestInterceptorErrorHandler,
+    )
     this.responseInterceptor = this.props.axios.interceptors.response.use(
       this.responseInterceptorSuccessHandler,
-      this.responseInterceptorErrorHandler
-    );
+      this.responseInterceptorErrorHandler,
+    )
   }
 
   componentWillUnmount() {
-    this.props.axios.interceptors.request.eject(this.requestInterceptor);
-    this.props.axios.interceptors.response.eject(this.responseInterceptor);
+    this.props.axios.interceptors.request.eject(this.requestInterceptor)
+    this.props.axios.interceptors.response.eject(this.responseInterceptor)
   }
 
   requestInterceptorSuccessHandler = async config => {
-    const token = await this.props.auth.getAccessToken();
+    const token = await this.props.auth.getAccessToken()
     // If not able to retrieve a token, send the user back to login
-    if (typeof token === 'undefined') {
+    if (typeof token === "undefined") {
       this.props.auth.login(
         `${this.props.location.pathname}${this.props.location.search}${
           this.props.location.hash
-        }`
-      );
-      return config;
+        }`,
+      )
+      return config
     }
     // Process the user supplied requestInterceptorHandler
-    const newConfig = this.props.requestInterceptorHandler(config);
+    const newConfig = this.props.requestInterceptorHandler(config)
     // Return the config with the token appended to the Authorization Header
     return {
       ...newConfig,
       headers: {
-        ...get(newConfig, 'headers', {}),
+        ...get(newConfig, "headers", {}),
         Authorization: `Bearer ${token}`,
       },
-    };
-  };
+    }
+  }
 
   requestInterceptorErrorHandler = error =>
-    this.props.requestInterceptorErrorHandler(error);
+    this.props.requestInterceptorErrorHandler(error)
 
   responseInterceptorSuccessHandler = response =>
-    this.props.responseInterceptorSuccessHandler(response);
+    this.props.responseInterceptorSuccessHandler(response)
 
   responseInterceptorErrorHandler = error => {
-    if (get(error, 'response.status') === 401) {
+    if (get(error, "response.status") === 401) {
       this.props.auth.login(
         `${this.props.location.pathname}${this.props.location.search}${
           this.props.location.hash
-        }`
-      );
+        }`,
+      )
     }
-    return this.props.responseInterceptorErrorHandler(error);
-  };
+    return this.props.responseInterceptorErrorHandler(error)
+  }
 
   render() {
-    return this.props.children;
+    return this.props.children
   }
 }
 
-export default withRouter(withAuth(UndecoratedSetupAxios));
+export default withRouter(withAuth(UndecoratedSetupAxios))
 ```
 
 ### SetupAxios
@@ -121,12 +121,12 @@ Is a component that will wire up Axios interceptors to append the Okta token to 
 
 #### Configuration Properties
 
-* **axios** (optional) - Defaults to the global axios instance but can be used to pass a new axios instance created using `axios.create()` so that more than one Axios instance can be wired up.
-* **children** (optional)
-* **requestInterceptorHandler** (optional) - Can be used to append additional properties to the Axios config before the request fires off. Defaults to `config => config`.
-* **requestInterceptorErrorHandler** (optional) - Can be used to set the request interceptor error handler. Defaults to `error => Promise.reject(error)`.
-* **responseInterceptorSuccessHandler** (optional) - Can be used to set the response interceptor success handler. Defaults to `response => response`.
-* **responseInterceptorErrorHandler** (optional) - Can be used to add additional actions to the response interceptor error handler after the handler checks for 401 errors. Defaults to `error => Promise.reject(error)`.
+- **axios** (optional) - Defaults to the global axios instance but can be used to pass a new axios instance created using `axios.create()` so that more than one Axios instance can be wired up.
+- **children** (optional)
+- **requestInterceptorHandler** (optional) - Can be used to append additional properties to the Axios config before the request fires off. Defaults to `config => config`.
+- **requestInterceptorErrorHandler** (optional) - Can be used to set the request interceptor error handler. Defaults to `error => Promise.reject(error)`.
+- **responseInterceptorSuccessHandler** (optional) - Can be used to set the response interceptor success handler. Defaults to `response => response`.
+- **responseInterceptorErrorHandler** (optional) - Can be used to add additional actions to the response interceptor error handler after the handler checks for 401 errors. Defaults to `error => Promise.reject(error)`.
 
 ### Example usage
 
