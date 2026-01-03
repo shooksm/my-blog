@@ -27,12 +27,12 @@
   --spacing-20: 5rem;
   --spacing-24: 6rem;
   --spacing-32: 8rem;
-  --fontFamily-sans: "MontserratVariable", system-ui, -apple-system,
-    BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
-    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-    "Noto Color Emoji";
-  --fontFamily-serif: "Merriweather", "Georgia", Cambria, "Times New Roman",
-    Times, serif;
+  --fontFamily-sans:
+    "MontserratVariable", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --fontFamily-serif:
+    "Merriweather", "Georgia", Cambria, "Times New Roman", Times, serif;
   --font-body: var(--fontFamily-serif);
   --font-heading: var(--fontFamily-sans);
   --fontWeight-normal: 400;
@@ -52,12 +52,18 @@
   --fontSize-5: 2.074rem;
   --fontSize-6: 2.488rem;
   --fontSize-7: 2.986rem;
-  --color-primary: #005b99;
-  --color-text: #2e353f;
-  --color-text-light: #4f5969;
-  --color-heading: #1a202c;
-  --color-heading-black: black;
-  --color-accent: #d1dce5;
+  /* Dark theme colors */
+  --color-background: #0d1b2a;
+  --color-primary: #e3b341;
+  --color-primary-light: #f0d77a;
+  --color-text: #cbd5e1;
+  --color-text-light: #94a3b8;
+  --color-heading: #f1f5f9;
+  --color-heading-black: #ffffff;
+  --color-accent: #334155;
+  --color-focus: #67b8e3;
+  --color-code-bg: #f8fafc;
+  --color-code-text: #1e293b;
 }
 
 /* HTML elements */
@@ -79,6 +85,7 @@ body {
   font-family: var(--font-body);
   font-size: var(--fontSize-1);
   color: var(--color-text);
+  background-color: var(--color-background);
 }
 
 footer {
@@ -231,9 +238,30 @@ a {
   color: var(--color-primary);
 }
 
-a:hover,
-a:focus {
+a:hover {
+  color: var(--color-primary-light);
   text-decoration: none;
+}
+
+a:focus {
+  color: var(--color-primary-light);
+  text-decoration: none;
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+a:focus:not(:focus-visible) {
+  outline: none;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+::selection {
+  background-color: var(--color-primary);
+  color: var(--color-background);
 }
 
 /* Custom classes */
@@ -315,6 +343,15 @@ a:focus {
 
 .gatsby-highlight {
   margin-bottom: var(--spacing-8);
+}
+
+/* Inline code styling */
+:not(pre) > code {
+  background-color: var(--color-code-bg);
+  color: var(--color-code-text);
+  padding: 0.2em 0.4em;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
 }
 
 /* Media queries */
